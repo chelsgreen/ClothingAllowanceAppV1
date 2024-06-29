@@ -1,13 +1,8 @@
 ﻿using System;
-
 using System.Collections.Generic;
-
 using System.Globalization;
-
 using System.Linq;
-
 using System.Text;
-
 using System.Threading.Tasks;
 
 namespace ClothingAllowanceAppV1
@@ -23,13 +18,9 @@ namespace ClothingAllowanceAppV1
 
 
         private string name;
-
         private float allowance;
-
         private bool bonus;
-
         private DateTime date;
-
         private string bonusActivity;
 
 
@@ -130,21 +121,14 @@ namespace ClothingAllowanceAppV1
 
         }
 
-
-
         //calculates the total that the user has spent  
 
         public float CalculateCost()
 
         {
-
-
-
             return 300 - allowance;
 
         }
-
-
 
         public string Summary()
 
@@ -158,14 +142,11 @@ namespace ClothingAllowanceAppV1
 
             return summary;
 
-
-
         }
 
 
 
         //Deducts the allowance from the user that is selected 
-
         public void DeductFromAllowance(int amount)
 
         {
@@ -189,13 +170,12 @@ namespace ClothingAllowanceAppV1
             }
 
         }
-
         //create a method that checks if the user is able to make the purchase  
 
         public bool AvailableAllowance()
 
         {
-            return true;
+          return true;
         }
 
         public string ToString()
@@ -206,11 +186,6 @@ namespace ClothingAllowanceAppV1
 
         }
 
-
-
-
-
     }
 
 }
-

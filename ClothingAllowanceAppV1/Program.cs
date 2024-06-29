@@ -1,13 +1,8 @@
 ﻿using ClothingAllowanceAppV1;
-
 using System;
-
 using System.Collections.Generic;
-
 using System.Linq;
-
 using System.Text;
-
 using System.Threading.Tasks;
 
 
@@ -26,7 +21,11 @@ namespace ClothingAllowanceAppV1
 
             List<string> name = new List<string>() { "Nikau", "Hana", "Tia" };
 
+
+
             Console.WriteLine("----Allowance Holder Testing----");
+
+
 
             AllowanceHolder testAH = new AllowanceHolder("Hana");
 
@@ -119,3 +118,4 @@ namespace ClothingAllowanceAppV1
     }
 
 }
+
