@@ -21,6 +21,8 @@ namespace ClothingAllowanceAppV1
 
             List<string> name = new List<string>() { "Nikau", "Hana", "Tia" };
 
+            List<string> bonusActivites = new List<string>() { "Movie Night", "Splash Planet", "Bowling" };
+
 
 
             Console.WriteLine("----Allowance Holder Testing----");
@@ -35,13 +37,69 @@ namespace ClothingAllowanceAppV1
 
             Console.WriteLine(testAH.Summary());
 
-            Console.WriteLine(testAH.CheckBonus());
-
             Console.WriteLine($"Allowance: ${testAH.GetAllowance()}");
 
 
 
             Console.WriteLine("--------------------------------");
+
+
+
+            //bonus activity selection 
+
+            bool validInput = false; // Initialize validInput to false 
+
+            while (!validInput)
+
+            {
+
+                Console.WriteLine("Choose a bonus activity by entering the corresponding number:");
+
+                for (int i = 0; i < bonusActivites.Count; i++)
+
+                { Console.WriteLine($"{i + 1}.{bonusActivites[i]}"); }
+
+                Console.Write("Enter the number correponding to the bonus activity:");
+
+                string activityNumberInput = Console.ReadLine();
+
+
+
+                //return the selected activity back to the user 
+
+                if (int.TryParse(activityNumberInput, out int activityNumber) && activityNumber >= 1
+
+                    && activityNumber <= bonusActivites.Count)
+
+                {
+
+                    string selectedActivity = bonusActivites[activityNumber - 1];
+
+                    testAH.SetBonus(selectedActivity);
+
+                    Console.WriteLine($"Bonus activity selected is: {selectedActivity}");
+
+                    validInput = true; // Set validInput to true to exit the loop 
+
+                }
+
+                else
+
+                {
+
+                    //if user selects something outside of the range or invalid like a letter 
+
+                    Console.WriteLine("**Invalid input**Please enter a valid number corresponding to the bonus activity.");
+
+                }
+
+
+
+                Console.WriteLine("--------------------------------");
+
+            }
+
+
 
 
 
@@ -77,7 +135,7 @@ namespace ClothingAllowanceAppV1
 
 
 
-                    Console.Write("Do you want to deduct more money? (yes/no): ");
+                    Console.Write("Do you want to deduct more money? (yes/no):");
 
                     string continueInput = Console.ReadLine().ToLower();
 
@@ -105,7 +163,11 @@ namespace ClothingAllowanceAppV1
 
                 }
 
+
+
             }
+
+            //closing messgae 
 
 
 
@@ -118,4 +180,3 @@ namespace ClothingAllowanceAppV1
     }
 
 }
-

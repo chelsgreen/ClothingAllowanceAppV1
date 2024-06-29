@@ -15,15 +15,15 @@ namespace ClothingAllowanceAppV1
 
         //attributes or fields 
 
-
-
         private string name;
+
         private float allowance;
+
         private bool bonus;
+
         private DateTime date;
+
         private string bonusActivity;
-
-
 
         //methods and functions 
 
@@ -53,9 +53,11 @@ namespace ClothingAllowanceAppV1
 
         }
 
+
+
         //method that will set bonus activity 
 
-        public string SetBonus()
+        public string SetBonus(string selectedActivity)
 
         {
 
@@ -76,6 +78,8 @@ namespace ClothingAllowanceAppV1
         }
 
 
+
+        //Gets the allowance the allowance holder want's to do 
 
         public float GetAllowance()
 
@@ -121,14 +125,21 @@ namespace ClothingAllowanceAppV1
 
         }
 
+
+
         //calculates the total that the user has spent  
 
         public float CalculateCost()
 
         {
+
+
+
             return 300 - allowance;
 
         }
+
+
 
         public string Summary()
 
@@ -136,7 +147,7 @@ namespace ClothingAllowanceAppV1
 
             //returns a string containing all the infomation the user need to know  
 
-            string summary = $"Name: {name}\nDate: {date.ToString("d", (new CultureInfo("es-ES")))}";
+            string summary = $"Name: {name}\nBonus: {bonus}";
 
 
 
@@ -146,7 +157,10 @@ namespace ClothingAllowanceAppV1
 
 
 
+
+
         //Deducts the allowance from the user that is selected 
+
         public void DeductFromAllowance(int amount)
 
         {
@@ -163,20 +177,31 @@ namespace ClothingAllowanceAppV1
 
             {
 
-                //Makes it so the user cant deduct more than $300  
+                //Message back to the user saying they can not deduct more than $300  
 
                 Console.WriteLine("Cannot deduct more than the available allowance.");
 
             }
 
         }
+
+
+
         //create a method that checks if the user is able to make the purchase  
 
-        public bool AvailableAllowance()
+        public bool AvailableAllowance(float purchaseAmount)
 
         {
-          return true;
+
+            // check if the remaining allowance is enough to make the purchase 
+
+            return purchaseAmount <= allowance;
+
         }
+
+
+
+
 
         public string ToString()
 
@@ -185,6 +210,23 @@ namespace ClothingAllowanceAppV1
             return "";
 
         }
+
+
+
+        public string BonusActivity { get; private set; }
+
+
+
+        //sets the bonus activity for the user. 
+
+        public void SetBonusActivity(string activity)
+
+        {
+
+            BonusActivity = activity;
+
+        }
+
 
     }
 

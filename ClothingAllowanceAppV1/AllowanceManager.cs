@@ -40,53 +40,67 @@ namespace ClothingAllowanceAppV1
 
         }
 
+
+
         public int CalculateAvailableAllowance(string searchName)
 
         {
 
-            //for each loop allowance holder in alowance holders 
+            // for each loop allowance holder in allowance holders 
 
-            foreach (AllowanceHolder alowanceHolder in allowanceHolders)
+            foreach (AllowanceHolder allowanceHolder in allowanceHolders)
 
             {
 
+                // if allowance holder name is = searchName 
 
+                if (allowanceHolder.GetName().Equals(searchName, StringComparison.OrdinalIgnoreCase))
+
+                {
+
+                    // get allowance by calling GetAllowance method 
+
+                    return (int)allowanceHolder.GetAllowance();
+
+                }
 
             }
 
-
-
-            // if allowance holder name is = searchName 
-
-
-
-            // get allowance by calling GetAllowance method 
-
-            return 2;
+            return 0; // or some other value indicating the user was not found 
 
         }
+
+
 
         public bool CheckAvailableAllowance(string searchName)
 
         {
 
-            // foreach loop allowance holder in alowance holders 
+            // foreach loop allowance holder in allowance holders 
 
+            foreach (AllowanceHolder allowanceHolder in allowanceHolders)
 
+            {
 
-            //if alowance holder name is =searchName 
+                // if allowance holder name is = searchName 
 
+                if (allowanceHolder.GetName().Equals(searchName, StringComparison.OrdinalIgnoreCase))
 
+                {
 
-            // check if they are able to make the purchase 
+                    // check if they are able to make the purchase 
 
+                    return allowanceHolder.CheckBonus();
 
+                }
 
+            }
 
-
-            return true;
+            return false; // or some other value indicating the user was not found 
 
         }
+
+
 
 
 
@@ -94,11 +108,25 @@ namespace ClothingAllowanceAppV1
 
 
 
-        public int BonusTracker()
+        public int BonusTracker(string searchName)
 
         {
 
-            return 1;
+            foreach (AllowanceHolder allowanceHolder in allowanceHolders)
+
+            {
+
+                if (allowanceHolder.GetName().Equals(searchName, StringComparison.OrdinalIgnoreCase))
+
+                {
+
+                    return allowanceHolder.CheckBonus() ? 1 : 0; // 1 if on track for bonus, 0 if not 
+
+                }
+
+            }
+
+            return -1; // user not found          
 
         }
 
@@ -112,6 +140,10 @@ namespace ClothingAllowanceAppV1
 
         {
 
+
+
+
+
             //provide a string with infomation like name, allowance deducted, what they have purchased ith the price attached to it 
 
             return "";
@@ -124,15 +156,45 @@ namespace ClothingAllowanceAppV1
 
 
 
-        public int deductAllowance()
+        public string DeductAllowance(string searchName, int amount)
 
         {
 
-            //only deduct allowance if the user has enough otherwise promit a message 
+            foreach (AllowanceHolder allowanceHolder in allowanceHolders)
 
-            //saying that they are unable to make a purchase  
+            {
 
-            return 1;
+                //only deduct allowance if the user has enough otherwise promit a message 
+
+                if (allowanceHolder.GetName().Equals(searchName))
+
+                {
+
+                    if (allowanceHolder.AvailableAllowance(amount))
+
+                    {
+
+                        allowanceHolder.DeductFromAllowance(amount);
+
+                        return $"Deducted {amount} from {searchName}'s allowance. Remaining allowance: {allowanceHolder.GetAllowance()}";
+
+                    }
+
+                    else
+
+                    {
+
+                        // only deduct allowance if the user has enough otherwise prompt a message saying that they are unable to make a purchase 
+
+                        return $"Unable to deduct {amount}. Insufficient allowance.";
+
+                    }
+
+                }
+
+            }
+
+            return "Allowance holder not found.";
 
         }
 
@@ -142,21 +204,34 @@ namespace ClothingAllowanceAppV1
 
 
 
-        public string SetBonus()
+
+
+        public string SetBonus(string searchName, string activity)
 
         {
 
+            foreach (AllowanceHolder allowanceHolder in allowanceHolders)
 
+            {
 
-            return "";
+                if (allowanceHolder.GetName().Equals(searchName))
+
+                {
+
+                    // Assuming the SetBonus method is intended to set a bonus activity. 
+
+                    allowanceHolder.SetBonusActivity(activity);
+
+                    return $"Set bonus activity for {searchName} to '{activity}'.";
+
+                }
+
+            }
+
+            return "Allowance holder not found.";
 
         }
-
-
 
     }
 
 }
-
-
-
