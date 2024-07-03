@@ -11,59 +11,36 @@ namespace ClothingAllowanceAppV1
     class AllowanceManager
 
     {
-
         private List<AllowanceHolder> allowanceHolders = new List<AllowanceHolder>();
-
         readonly private List<string> NAMES = new List<string> { "Nikau", "Hana", "Tia" };
-
 
 
         public AllowanceManager()
 
         {
-
             //foreach loop through names list 
-
             foreach (var name in NAMES)
-
             {
-
-
-
+                allowanceHolders.Add(new AllowanceHolder(name));
             }
-
-
-
             //add new allowance holder to allowance holders list 
-
-
-
         }
 
 
 
         public int CalculateAvailableAllowance(string searchName)
-
         {
-
             // for each loop allowance holder in allowance holders 
-
             foreach (AllowanceHolder allowanceHolder in allowanceHolders)
 
             {
-
                 // if allowance holder name is = searchName 
-
                 if (allowanceHolder.GetName().Equals(searchName, StringComparison.OrdinalIgnoreCase))
 
                 {
-
                     // get allowance by calling GetAllowance method 
-
                     return (int)allowanceHolder.GetAllowance();
-
                 }
-
             }
 
             return 0; // or some other value indicating the user was not found 
@@ -71,125 +48,42 @@ namespace ClothingAllowanceAppV1
         }
 
 
-
-        public bool CheckAvailableAllowance(string searchName)
-
-        {
-
-            // foreach loop allowance holder in allowance holders 
-
-            foreach (AllowanceHolder allowanceHolder in allowanceHolders)
-
-            {
-
-                // if allowance holder name is = searchName 
-
-                if (allowanceHolder.GetName().Equals(searchName, StringComparison.OrdinalIgnoreCase))
-
-                {
-
-                    // check if they are able to make the purchase 
-
-                    return allowanceHolder.CheckBonus();
-
-                }
-
-            }
-
-            return false; // or some other value indicating the user was not found 
-
-        }
-
-
-
-
-
         //method that will check if selected allowance holder is on track for bonus 
-
-
-
         public int BonusTracker(string searchName)
 
         {
-
             foreach (AllowanceHolder allowanceHolder in allowanceHolders)
-
             {
-
                 if (allowanceHolder.GetName().Equals(searchName, StringComparison.OrdinalIgnoreCase))
-
                 {
-
-                    return allowanceHolder.CheckBonus() ? 1 : 0; // 1 if on track for bonus, 0 if not 
-
+                    return allowanceHolder.GetBonus() ? 1 : 0; // 1 if on track for bonus, 0 if not 
                 }
 
             }
-
             return -1; // user not found          
-
         }
-
-
-
-        //method that will return selected allowances holders summary 
-
-
-
-        public string HoldersSummary()
-
-        {
-
-
-
-
-
-            //provide a string with infomation like name, allowance deducted, what they have purchased ith the price attached to it 
-
-            return "";
-
-        }
-
 
 
         //method that will deduct allowance that user wants to spend 
-
-
-
-        public string DeductAllowance(string searchName, int amount)
+        public string DeductAllowance(string searchName, int amount, DateTime date, string description)
 
         {
-
             foreach (AllowanceHolder allowanceHolder in allowanceHolders)
-
             {
-
                 //only deduct allowance if the user has enough otherwise promit a message 
-
                 if (allowanceHolder.GetName().Equals(searchName))
-
                 {
-
                     if (allowanceHolder.AvailableAllowance(amount))
-
                     {
-
-                        allowanceHolder.DeductFromAllowance(amount);
-
+                        allowanceHolder.DeductFromAllowance(amount, date, description);
                         return $"Deducted {amount} from {searchName}'s allowance. Remaining allowance: {allowanceHolder.GetAllowance()}";
-
                     }
 
                     else
-
                     {
-
                         // only deduct allowance if the user has enough otherwise prompt a message saying that they are unable to make a purchase 
-
                         return $"Unable to deduct {amount}. Insufficient allowance.";
-
                     }
-
                 }
 
             }
@@ -197,14 +91,7 @@ namespace ClothingAllowanceAppV1
             return "Allowance holder not found.";
 
         }
-
-
-
         //method that will set bonus activity for a chosen allowance holder 
-
-
-
-
 
         public string SetBonus(string searchName, string activity)
 
@@ -229,6 +116,26 @@ namespace ClothingAllowanceAppV1
             }
 
             return "Allowance holder not found.";
+
+        }
+
+        public string AllowanceHolderSummary()
+
+        {
+
+            //provide a string with infomation like name, allowance deducted, what they have purchased ith the price attached to it 
+
+            string allowanceHolderSummary = "";
+
+            foreach (var allowanceHolder in allowanceHolders)
+
+            {
+
+                allowanceHolderSummary += allowanceHolder.AllowanceHolderSummary();
+
+            }
+
+            return allowanceHolderSummary;
 
         }
 

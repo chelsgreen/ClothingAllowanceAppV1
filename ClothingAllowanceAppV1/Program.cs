@@ -5,51 +5,34 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-
-
 namespace ClothingAllowanceAppV1
 
 {
-
     class Program
 
     {
-
         static void Main(string[] args)
 
         {
 
             List<string> name = new List<string>() { "Nikau", "Hana", "Tia" };
-
             List<string> bonusActivites = new List<string>() { "Movie Night", "Splash Planet", "Bowling" };
 
-
-
             Console.WriteLine("----Allowance Holder Testing----");
-
-
 
             AllowanceHolder testAH = new AllowanceHolder("Hana");
 
             //Sets the allowance for the Child to $300 
-
             testAH.SetAllowance(300);
-
             Console.WriteLine(testAH.Summary());
-
             Console.WriteLine($"Allowance: ${testAH.GetAllowance()}");
-
-
-
             Console.WriteLine("--------------------------------");
-
-
 
             //bonus activity selection 
 
-            bool validInput = false; // Initialize validInput to false 
+            bool validBonusInput = false; // Initialize validBonusInput to false 
 
-            while (!validInput)
+            while (!validBonusInput)
 
             {
 
@@ -57,9 +40,13 @@ namespace ClothingAllowanceAppV1
 
                 for (int i = 0; i < bonusActivites.Count; i++)
 
-                { Console.WriteLine($"{i + 1}.{bonusActivites[i]}"); }
+                {
 
-                Console.Write("Enter the number correponding to the bonus activity:");
+                    Console.WriteLine($"{i + 1}.{bonusActivites[i]}");
+
+                }
+
+                Console.Write("Enter the number corresponding to the bonus activity:");
 
                 string activityNumberInput = Console.ReadLine();
 
@@ -79,7 +66,7 @@ namespace ClothingAllowanceAppV1
 
                     Console.WriteLine($"Bonus activity selected is: {selectedActivity}");
 
-                    validInput = true; // Set validInput to true to exit the loop 
+                    validBonusInput = true; // Set validBonusInput to true to exit the loop 
 
                 }
 
@@ -89,17 +76,15 @@ namespace ClothingAllowanceAppV1
 
                     //if user selects something outside of the range or invalid like a letter 
 
-                    Console.WriteLine("**Invalid input**Please enter a valid number corresponding to the bonus activity.");
+                    Console.WriteLine("**Invalid input** Please enter a valid number" +
+
+                        " corresponding to the bonus activity.");
 
                 }
-
-
 
                 Console.WriteLine("--------------------------------");
 
             }
-
-
 
 
 
@@ -111,71 +96,110 @@ namespace ClothingAllowanceAppV1
 
             {
 
-                Console.Write("Please enter the amount of money spent: \n");
+                bool validMoneyInput = false; // Initialize validMoneyInput to false 
 
-
-
-                // Read user input as string 
-
-                string userInput = Console.ReadLine();
-
-
-
-                // Parse user input to convert it into a numeric value 
-
-                if (int.TryParse(userInput, out int moneySpent))
+                while (!validMoneyInput)
 
                 {
 
-                    // Deduct the money spent from the allowance of the child 
-
-                    testAH.DeductFromAllowance(moneySpent);
-
-                    Console.WriteLine($"Allowance after deduction: ${testAH.GetAllowance()}");
+                    Console.Write("Please enter the amount of money spent: ");
 
 
 
-                    Console.Write("Do you want to deduct more money? (yes/no):");
+                    string userInput = Console.ReadLine();
+
+
+
+                    if (int.TryParse(userInput, out int moneySpent))
+
+                    {
+
+                        // Deduct the money spent from the allowance of the child 
+
+                        testAH.DeductFromAllowance(moneySpent, new DateTime(2024, 06, 29), "hat");
+
+                        Console.WriteLine($"Allowance after deduction: ${testAH.GetAllowance()}");
+
+                        //Valid input recevied, exits the loop 
+
+                        validMoneyInput = true;
+
+                    }
+
+
+                    else
+
+                    {
+
+                        //if the user enters something that is not vaild  
+
+                        Console.WriteLine("**************************************************\n" +
+                            "Invalid input. Please enter a valid numeric value.\n" +
+                            "**************************************************");
+                    }
+
+                }
+
+
+
+                bool validResponse = false;
+
+                while (!validResponse)
+
+                {
+
+                    Console.Write("Do you want to deduct more money? (yes/no): ");
 
                     string continueInput = Console.ReadLine().ToLower();
 
 
 
-                    // Check if the user wants to continue deducting money, if not close the program 
-
-                    if (continueInput != "yes")
+                    if (continueInput == "yes")
 
                     {
 
-                        continueDeducting = false;
+                        validResponse = true; // Valid response, exit the loop and asks use to subtract more money 
+
+                    }
+
+                    else if (continueInput == "no")
+
+                    {
+
+                        continueDeducting = false; // User does not want to deduct more money, exit the outer loop 
+
+
+
+                        validResponse = true; // Valid response, exit the loop 
+
+                    }
+
+                    else
+
+                    {
+
+                        // Stay in the loop to ask again for a valid response 
+
+                        Console.WriteLine("**************************************************" +
+                            "\nInvalid input. Please enter 'yes' or 'no'.\n" +
+                            "**************************************************");
 
                     }
 
                 }
 
-                //if the user enters something that is not a numerical value 
-
-                else
-
-                {
-
-                    Console.WriteLine("Invalid input. Please enter a valid numeric value.");
-
-                }
-
-
-
             }
 
-            //closing messgae 
 
-
+            // Closing message to user 
 
             Console.WriteLine("Thank's for using Clothing Allowance App!");
 
             Console.ReadLine();
 
         }
+
+
 
     }
 
